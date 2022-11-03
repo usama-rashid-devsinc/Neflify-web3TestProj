@@ -44,7 +44,7 @@ const TokensInfo = ({ currentUser }) => {
         <h4>
           Staking Tokens :{" "}
           {stakingBal != undefined || stakingBal != null
-            ? parseInt(stakingBal._hex, 16) / 10 ** 5
+            ? parseInt(stakingBal._hex, 16) / 10 ** 18
             : 0}
         </h4>
         <h4>
@@ -53,14 +53,14 @@ const TokensInfo = ({ currentUser }) => {
             ? parseInt(rewardingBal._hex, 16) / 10 ** 5
             : 0} */}
           Rewarding Tokens : {rewardingBal == "undefined" && 0}
-          {rewardingBal && parseInt(rewardingBal._hex, 16) / 10 ** 5}
+          {rewardingBal && parseInt(rewardingBal._hex, 16) / 10 ** 18}
         </h4>
       </div>
     </div>
   ) : (
     <div style={{ textAlign: "center" }}>
       <h4>Connect your Wallet to see Tokens Infos</h4>
-      <div>Kindly Connect to Binance Smart Chain (TestNet)!!</div>
+      <div>Kindly Connect to Binance Smart Chain (TestNet)</div>
     </div>
   );
 };

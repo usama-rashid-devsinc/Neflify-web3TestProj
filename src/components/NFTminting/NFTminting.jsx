@@ -249,7 +249,7 @@ const NFTminting = ({ currentUser }) => {
       <h4>
         Rewarding Tokens :{" "}
         {rewardingBal != undefined || rewardingBal != null
-          ? parseInt(rewardingBal._hex, 16) / 10 ** 5
+          ? parseInt(rewardingBal._hex, 16) / 10 ** 18
           : 0}
       </h4>
       <hr />

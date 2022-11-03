@@ -1,5 +1,5 @@
 export const StakingToken = {
-  address: "0x07C9926f724E07F5c39C8936b55374C32EeC7534",
+  address: "0xe957ccc8F8BDACcFC70FE02539159Cb39B17a951",
   abi: [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
     {
@@ -133,7 +133,7 @@ export const StakingToken = {
   ],
 };
 export const RewardingToken = {
-  address: "0xC9090696365b23Ce8f84803a09E4244B91De837C",
+  address: "0x0444d6432B27Fbc56d060dDcA2Bb41bF138Eeb15",
   abi: [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
     {
@@ -268,7 +268,7 @@ export const RewardingToken = {
 };
 
 export const TokenStakingContract = {
-  address: "0x29C2A3Ad6F1736CBBD94ff24BD8c1FFdC1086c2F",
+  address: "0xB414021cEf503B6E56B93613d6e170391634366F",
   abi: [
     {
       inputs: [
@@ -296,6 +296,7 @@ export const TokenStakingContract = {
           name: "from",
           type: "address",
         },
+        { indexed: true, internalType: "address", name: "to", type: "address" },
         {
           indexed: false,
           internalType: "uint256",
@@ -405,7 +406,6 @@ export const TokenStakingContract = {
         { internalType: "uint256", name: "amountStaked", type: "uint256" },
         { internalType: "uint256", name: "amountClaimed", type: "uint256" },
         { internalType: "uint256", name: "RewardCreated", type: "uint256" },
-        { internalType: "uint256", name: "RewardOnPrincipal", type: "uint256" },
         { internalType: "uint256", name: "dayPassed", type: "uint256" },
       ],
       stateMutability: "view",
@@ -415,7 +415,7 @@ export const TokenStakingContract = {
 };
 
 export const NFTContract = {
-  address: "0x9C39D9F4270a49427574c22C47F16DF84F8A6c42",
+  address: "0xBDcD19625D9E377a0203Eca951e3F899D04D4E3F",
   abi: [
     {
       inputs: [

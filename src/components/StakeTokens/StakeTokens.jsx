@@ -8,6 +8,8 @@ import {
   TokenStakingContract,
 } from "../wagmiConfigurations";
 
+/* global BigInt */
+
 export default function StakeTokens({ currentUser }) {
   const [stakingTokenBalance, setStakingTokenBalance] = useState(0);
   const [stakeValue, setStakeValue] = useState(0);
@@ -102,7 +104,7 @@ export default function StakeTokens({ currentUser }) {
   const { data: StakeData, write: StakeTokensWrite } = useContractWrite({
     ...TokenStakingContract,
     functionName: "StakeTokens",
-    args: [stakeValue * 10 ** 5],
+    args: [BigInt(stakeValue * 10 ** 18)],
     onSettled(data, error) {
       setError(error.reason);
       // console.log("Settled", { data, error });
@@ -114,7 +116,7 @@ export default function StakeTokens({ currentUser }) {
       setError("Cannot Stake a negative value");
     } else if (stakeValue == 0) {
       setError("Cannot Stake 0 Tokens");
-    } else if (stakeValue * 10 ** 5 > stakingBal) {
+    } else if (stakeValue * 10 ** 18 > stakingBal) {
       setError("Enter a Amount less than or equal to the current balance");
     } else {
       // Call the Staking contract
@@ -173,10 +175,10 @@ export default function StakeTokens({ currentUser }) {
               {
                 amountStaked: parseInt(result.amountStaked._hex, 16),
                 RewardCreated: parseInt(result.RewardCreated._hex, 16),
-                RewardOnPrincipal: parseInt(result.RewardOnPrincipal._hex, 16),
+                // RewardOnPrincipal: parseInt(result.RewardOnPrincipal._hex, 16),
                 dayPassed: parseInt(result.dayPassed._hex, 16),
                 amountClaimed: parseInt(result.amountClaimed._hex, 16),
-                RewardOnPrincipal: parseInt(result.RewardOnPrincipal._hex, 16),
+                // RewardOnPrincipal: parseInt(result.RewardOnPrincipal._hex, 16),
               },
             ]);
           });
@@ -225,7 +227,7 @@ export default function StakeTokens({ currentUser }) {
           <h4>
             StakingTokens balance :{" "}
             {stakingBal != undefined || stakingBal != null
-              ? parseInt(stakingBal._hex, 16) / 10 ** 5
+              ? parseInt(stakingBal._hex, 16) / 10 ** 18
               : 0}
           </h4>
           <div>
@@ -255,11 +257,11 @@ export default function StakeTokens({ currentUser }) {
               StakingInfos.map((result) => {
                 return (
                   <div>
-                    <div> Amount Staked: {result.amountStaked / 10 ** 5}</div>
-                    <div> RewardCreated: {result.RewardCreated / 10 ** 5}</div>
+                    <div> Amount Staked: {result.amountStaked / 10 ** 18}</div>
+                    <div> RewardCreated: {result.RewardCreated / 10 ** 18}</div>
                     {/* <div> RewardOnPrincipal: {result.RewardOnPrincipal}</div> */}
                     <div> dayPassed: {result.dayPassed}</div>
-                    <div> amountClaimed: {result.amountClaimed / 10 ** 5}</div>
+                    <div> amountClaimed: {result.amountClaimed / 10 ** 18}</div>
                     {/* <div> RewardOnPrincipal: {result.RewardOnPrincipal}</div> */}
                   </div>
                 );
