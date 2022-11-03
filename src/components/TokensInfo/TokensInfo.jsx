@@ -60,7 +60,7 @@ const TokensInfo = ({ currentUser }) => {
   ) : (
     <div style={{ textAlign: "center" }}>
       <h4>Connect your Wallet to see Tokens Infos</h4>
-      <div>Kindly Connect to Binance Smart Chain (TestNet)</div>
+      <div>Kindly Connect to Binance Smart Chain (TestNet)!!</div>
     </div>
   );
 };

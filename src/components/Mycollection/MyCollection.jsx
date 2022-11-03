@@ -78,12 +78,6 @@ const MyCollection = ({ currentUser }) => {
       }
     }
 
-    // Call of Async func in useState
-    getCollectionMetaData();
-    // MerkleHash();
-  }, [currentUser]);
-
-  useEffect(() => {
     async function MerkleHash() {
       if (currentUser != null) {
         const leafNodes = whitelistAddresses.map((addr) => keccak256(addr));
@@ -97,8 +91,13 @@ const MyCollection = ({ currentUser }) => {
         // console.log("My Collection hexProof:", [...hexProof]);
       }
     }
+    // Call of Async func in useState
+    getCollectionMetaData();
+    // MerkleHash();
     MerkleHash();
   }, [currentUser]);
+
+  // useEffect(() => {}, [currentUser]);
 
   const {
     data: TokenID,
@@ -165,7 +164,17 @@ const MyCollection = ({ currentUser }) => {
     setDiamondButton();
   }, [collection]);
 
-  // useEffect(() => {}, [collection]);
+  const { data: TokensData } = useContractRead({
+    ...NFTContract,
+    functionName: "CurrentlyOwnedTokens",
+    args: [],
+  });
+  useEffect(() => {
+    if (TokensData != null || TokensData != undefined) {
+      console.log("TOKENS DATA:", TokensData);
+    }
+  }, [TokensData]);
+
   return currentUser != null || currentUser != undefined ? (
     <div className="container p-0  ">
       <br></br>
