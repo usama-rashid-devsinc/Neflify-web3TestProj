@@ -53,7 +53,7 @@ export default function StakeTokens({ currentUser }) {
   } = useContractWrite({
     ...StakingToken,
     functionName: "approve",
-    args: [TokenStakingContract.address, ApprovalValue],
+    args: [TokenStakingContract.address, BigInt(ApprovalValue * 10 ** 18)],
   });
 
   useEffect(() => {
@@ -68,13 +68,16 @@ export default function StakeTokens({ currentUser }) {
     console.log("Stake value handle Stake :", stakeValue);
     if (ApprovalValue < 0) {
       setError("Cannot Approve a negative value");
-    } else if (ApprovalValue == 0) {
-      setError("Cannot Approve 0 Tokens");
-    } else if (ApprovalValue * 10 ** 18 > stakingBal) {
-      setError(
-        "Enter a Amount less than or equal to the current balance to Approve"
-      );
-    } else {
+    }
+    // else if (ApprovalValue == 0) {
+    //   setError("Cannot Approve 0 Tokens");
+    // }
+    // else if (ApprovalValue * 10 ** 18 > stakingBal) {
+    //   setError(
+    //     "Enter a Amount less than or equal to the current balance to Approve"
+    //   );
+    // }
+    else {
       // Call the Staking contract
       // StakeTokensWrite({});
       AppovalWrite({});
@@ -263,7 +266,7 @@ export default function StakeTokens({ currentUser }) {
               <Button onClick={handleStake}>Stake</Button>
               <hr />
               <div>
-                <h4>
+                <h4 style={{ color: "#267aa4" }}>
                   {" "}
                   Unstake Tokens:
                   {"  "} <Button onClick={handleUnStake}>UnStake</Button>

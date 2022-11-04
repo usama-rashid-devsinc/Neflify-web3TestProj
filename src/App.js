@@ -8,6 +8,7 @@ import StakeTokens from "./components/StakeTokens/StakeTokens";
 import TokensInfo from "./components/TokensInfo/TokensInfo";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import NavBar2 from "./components/Navbar/NavBar2";
 
 const ChainName = () => {
   console.log("Chain Name");
@@ -24,12 +25,19 @@ const App = () => {
   return (
     <div className="background-image ">
       <div className="App">
-        <NavBar
+        {/* <NavBar
           currentUser={address}
           connect={connect}
           connectors={connectors}
           disconnect={disconnect}
-        ></NavBar>
+        ></NavBar> */}
+        <NavBar2
+          className="p2"
+          currentUser={address}
+          connect={connect}
+          connectors={connectors}
+          disconnect={disconnect}
+        ></NavBar2>
         <div className="blur-Backgrounds">
           <Routes>
             <Route>

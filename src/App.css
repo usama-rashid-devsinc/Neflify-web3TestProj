@@ -199,4 +199,5 @@ Extra (xl) large devices (large desktops, 1200px and up)
   -webkit-backdrop-filter: blur(0px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 3em;
 }
