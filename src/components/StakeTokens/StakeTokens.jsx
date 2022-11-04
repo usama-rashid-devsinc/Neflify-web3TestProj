@@ -16,6 +16,7 @@ export default function StakeTokens({ currentUser }) {
   const [Approval, setApproval] = useState(false);
   const [Displayerror, setError] = useState("");
   const [StakingInfos, setStakingInfos] = useState([]);
+  const [ApprovalValue, setApprovalValue] = useState(0);
   const { data: Approvalval } = useContractRead({
     ...StakingToken,
     functionName: "allowance",
@@ -52,7 +53,7 @@ export default function StakeTokens({ currentUser }) {
   } = useContractWrite({
     ...StakingToken,
     functionName: "approve",
-    args: [TokenStakingContract.address, stakingBal],
+    args: [TokenStakingContract.address, ApprovalValue],
   });
 
   useEffect(() => {
@@ -64,14 +65,31 @@ export default function StakeTokens({ currentUser }) {
   }, [isSuccess]);
 
   async function handleapprovalfunc() {
-    console.log(" Approval Handle called from button click");
-    AppovalWrite({});
+    console.log("Stake value handle Stake :", stakeValue);
+    if (ApprovalValue < 0) {
+      setError("Cannot Approve a negative value");
+    } else if (ApprovalValue == 0) {
+      setError("Cannot Approve 0 Tokens");
+    } else if (ApprovalValue * 10 ** 18 > stakingBal) {
+      setError(
+        "Enter a Amount less than or equal to the current balance to Approve"
+      );
+    } else {
+      // Call the Staking contract
+      // StakeTokensWrite({});
+      AppovalWrite({});
+    }
   }
+
   /* ##############################################  */
 
   // HANDLING of Input Feild
   const handleChange = (event) => {
     setStakeValue(event.target.value);
+  };
+
+  const handleChangeApproval = (event) => {
+    setApprovalValue(event.target.value);
   };
   /* ##############################################  */
 
@@ -84,7 +102,7 @@ export default function StakeTokens({ currentUser }) {
     functionName: "unStakeTokens",
     onSettled(data, error) {
       setError(error.reason);
-      console.log("Settled", { data, error });
+      // console.log("Settled", { data, error });
     },
   });
   async function handleUnStake() {
@@ -123,22 +141,10 @@ export default function StakeTokens({ currentUser }) {
       StakeTokensWrite({});
     }
   }
-  useEffect(() => {
-    console.log(
-      "Data StakeData:"
-      // StakeData
-      // parseInt(BalOfCurrUser._hex, 16) / 10 ** 5
-    );
-  }, [StakeData]);
 
-  // const { data: StakingInfo } = useContractRead({
-  //   ...TokenStakingContract,
-  //   functionName: "viewStakeValue",
-  //   // args: [currentUser],
-  // });
-  // useEffect(() => {
-  //   console.log("Data:StakingInfo:", StakingInfo);
-  // }, [StakingInfo]);
+  useEffect(() => {
+    console.log("Data StakeData:");
+  }, [StakeData]);
 
   useEffect(() => {
     setStakingInfos([]);
@@ -150,10 +156,6 @@ export default function StakeTokens({ currentUser }) {
           typeof window.ethereum !== "undefined" ||
           typeof window.web3 !== "undefined"
         ) {
-          // Web3 browser user detected. You can now use the provider.
-          // const accounts = await window.ethereum.request({
-          //   method: "eth_requestAccounts",
-          // });
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const walletAddress = currentUser;
           const signer = provider.getSigner(walletAddress);
@@ -218,29 +220,32 @@ export default function StakeTokens({ currentUser }) {
   }
 
   return (
-    <div style={{ align: "center", padding: "2em" }}>
-      {/* StakeTokens */}
-      <h4>Stake your StakingTokens to get 0.07% RewardTokens Daily</h4>
-      {/* <hr /> */}
+    <div className="container">
+      <h4 style={{ color: "#267aa4" }}>
+        Stake your StakingTokens to get 0.07% RewardTokens Daily
+      </h4>
+
       {currentUser ? (
-        <div>
-          <h4>
-            StakingTokens balance :{" "}
-            {stakingBal != undefined || stakingBal != null
-              ? parseInt(stakingBal._hex, 16) / 10 ** 18
-              : 0}
-          </h4>
-          <div>
-            <input
-              style={{ width: "250px" }}
-              type="number"
-              value={stakeValue}
-              onChange={handleChange}
-            />
-            <Button onClick={handleStake}>Stake</Button>
-            {!Approval && (
+        <div className="row" style={{ align: "center", padding: "2em" }}>
+          <div className="col-lg-6 p-1">
+            <h4 style={{ color: "#267aa4" }}>Stake Tokens</h4>
+            <h4>
+              StakingTokens balance :{" "}
+              {stakingBal != undefined || stakingBal != null
+                ? parseInt(stakingBal._hex, 16) / 10 ** 18
+                : 0}
+            </h4>
+            <div>
               <div>
                 Approve this Contract to Transfer your Staking Tokens:
+                <br />
+                Current Approval: {Approval}
+                <input
+                  style={{ width: "250px" }}
+                  type="number"
+                  value={ApprovalValue}
+                  onChange={handleChangeApproval}
+                />
                 <Button
                   style={{ paddingLeft: "0.5em" }}
                   onClick={handleapprovalfunc}
@@ -248,33 +253,56 @@ export default function StakeTokens({ currentUser }) {
                   Approve
                 </Button>
               </div>
-            )}
+              {/* )} */}
+              <input
+                style={{ width: "250px" }}
+                type="number"
+                value={stakeValue}
+                onChange={handleChange}
+              />
+              <Button onClick={handleStake}>Stake</Button>
+              <hr />
+              <div>
+                <h4>
+                  {" "}
+                  Unstake Tokens:
+                  {"  "} <Button onClick={handleUnStake}>UnStake</Button>
+                </h4>
+              </div>
+            </div>
+          </div>
 
-            <hr />
-            <Button onClick={handleUnStake}>UnStake</Button>
-            <hr />
-            {StakingInfos.length > 0 &&
+          <div className="col-lg-6 p-1">
+            <h4 style={{ color: "#267aa4" }}>Staking Details</h4>
+            {StakingInfos.length > 0 ? (
               StakingInfos.map((result) => {
                 return (
-                  <div>
+                  <div id={result.amountClaimed}>
                     <div> Amount Staked: {result.amountStaked / 10 ** 18}</div>
                     <div> RewardCreated: {result.RewardCreated / 10 ** 18}</div>
-                    {/* <div> RewardOnPrincipal: {result.RewardOnPrincipal}</div> */}
                     <div> dayPassed: {result.dayPassed}</div>
                     <div> amountClaimed: {result.amountClaimed / 10 ** 18}</div>
-                    {/* <div> RewardOnPrincipal: {result.RewardOnPrincipal}</div> */}
                   </div>
                 );
-              })}
-            <Button onClick={ClaimDailyhandler}>Claim Daily Reward </Button>
-            <hr />
-            {Displayerror != undefined && Displayerror.length > 0 && (
-              <div style={{ backgroundColor: "red" }}>{Displayerror}</div>
+              })
+            ) : (
+              // Since User has Not Staked So show All values as Zero
+              <div>
+                <div> Amount Staked: 0</div>
+                <div> RewardCreated: 0</div>
+                <div> dayPassed: 0</div>
+                <div> amountClaimed: 0</div>
+              </div>
             )}
+            <Button onClick={ClaimDailyhandler}>Claim Daily Reward </Button>
           </div>
+          {Displayerror != undefined && Displayerror.length > 0 && (
+            <div style={{ backgroundColor: "red" }}>{Displayerror}</div>
+          )}
         </div>
       ) : (
-        <div style={{ textAlign: "center" }}>
+        // When Wallet is Not Connected Show the Following :
+        <div style={{ textAlign: "center", align: "center", padding: "2em" }}>
           <h4>Connect your Wallet to start staking</h4>
           <div>Kindly Connect to Binance Smart Chain (TestNet)</div>
         </div>

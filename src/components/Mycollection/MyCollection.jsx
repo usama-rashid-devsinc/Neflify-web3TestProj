@@ -180,7 +180,7 @@ const MyCollection = ({ currentUser }) => {
       <br></br>
       <br></br>
 
-      <h3>Your Collectibles</h3>
+      <h3 style={{ color: "#267aa4" }}>Your Collectibles</h3>
       <div className="row">
         {collection.length > 0 &&
           collection.map((TokenData) => {

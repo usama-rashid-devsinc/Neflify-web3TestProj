@@ -245,7 +245,7 @@ const NFTminting = ({ currentUser }) => {
 
   return currentUser != null || currentUser != undefined ? (
     <div style={{ align: "center", padding: "2em" }}>
-      <h3>Use Reward Tokens to Mint Dev Nfts</h3>
+      <h3 style={{ color: "#267aa4" }}>Use Reward Tokens to Mint Dev Nfts</h3>
       <h4>
         Rewarding Tokens :{" "}
         {rewardingBal != undefined || rewardingBal != null
@@ -270,7 +270,8 @@ const NFTminting = ({ currentUser }) => {
           <br />
           {Owner === currentUser && (
             <div>
-              <hr /> End Pre-Sale to Start Public Sale{"   : "}
+              <br />
+              End Pre-Sale to Start Public Sale{"   : "}
               <Button onClick={handleEndPreSale}> End Presale</Button>
             </div>
           )}
@@ -314,7 +315,7 @@ const NFTminting = ({ currentUser }) => {
   ) : (
     <div style={{ textAlign: "center" }}>
       <div style={{ align: "center", padding: "2em" }}>
-        <h3>Use Reward Tokens to Mint Dev Nfts</h3>
+        <h3 style={{ color: "#267aa4" }}>Use Reward Tokens to Mint Dev Nfts</h3>
         <h4>Connect your Wallet to Start Minting</h4>
         <div>Kindly Connect to Binance Smart Chain (TestNet)</div>
       </div>
