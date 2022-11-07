@@ -267,7 +267,7 @@ export const RewardingToken = {
   ],
 };
 
-export const TokenStakingContract = {
+export const TokenStakingContract_OLD = {
   address: "0xB414021cEf503B6E56B93613d6e170391634366F",
   abi: [
     {
@@ -741,6 +741,126 @@ export const NFTContract = {
       ],
       name: "whitelistMint",
       outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+};
+
+export const TokenStakingContract = {
+  address: "0xc458ac4fAF6c3882d4F5bf3E4385E26B3380DA36",
+  abi: [
+    {
+      inputs: [
+        {
+          internalType: "address",
+          name: "_StakingTokenAddress",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "_RewardingTokenAddress",
+          type: "address",
+        },
+        { internalType: "address", name: "_separateWallet", type: "address" },
+      ],
+      stateMutability: "nonpayable",
+      type: "constructor",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        { indexed: true, internalType: "address", name: "to", type: "address" },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "Claimed",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "Staked",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        { indexed: true, internalType: "address", name: "to", type: "address" },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "UnStaked",
+      type: "event",
+    },
+    {
+      inputs: [],
+      name: "ClaimDailyRewards",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "uint256", name: "stakeAmount", type: "uint256" },
+      ],
+      name: "StakeTokens",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "owner",
+      outputs: [{ internalType: "address payable", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "unStakeTokens",
+      outputs: [{ internalType: "bool", name: "isUnstaked", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "viewStakeValue",
+      outputs: [
+        { internalType: "uint256", name: "StartTime", type: "uint256" },
+        { internalType: "uint256", name: "amountStaked", type: "uint256" },
+        { internalType: "uint256", name: "amountClaimed", type: "uint256" },
+        { internalType: "uint256", name: "RewardCreated", type: "uint256" },
+        { internalType: "uint256", name: "dayPassed", type: "uint256" },
+        { internalType: "uint256", name: "previousRewards", type: "uint256" },
+      ],
       stateMutability: "view",
       type: "function",
     },

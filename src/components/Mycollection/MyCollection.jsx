@@ -50,17 +50,17 @@ const MyCollection = ({ currentUser }) => {
                   console.log("TokenURI::: ", uri);
                   // const NewURi = uri.replace("/ ", "/");
                   // console.log("NewURi::: ", NewURi);
-                  await fetch(
+                  await fetch(uri.replace("ipfs://", "https://ipfs.io/ipfs/"))
                     // uri.replace("ipfs://", "https://ipfs.io/ipfs/")
-                    uri.replace("ipfs://", "https://ipfs.io/ipfs/")
-                  )
+
+                    // uri.replace("ipfs://", "http://127.0.0.1:8080/ipfs/")
                     .then((res) => res.json())
                     .then((Data) => {
                       console.log("Data", Data);
-                      console.log(
-                        "TokenData.attributes.itemType:",
-                        Data.attributes[0].itemType
-                      );
+                      // console.log(
+                      //   "TokenData.attributes.itemType:",
+                      //   Data.attributes[0].itemType
+                      // );
                       SetID((prevData) => [
                         ...prevData,
                         Data.attributes[0].itemType,
@@ -164,16 +164,16 @@ const MyCollection = ({ currentUser }) => {
     setDiamondButton();
   }, [collection]);
 
-  const { data: TokensData } = useContractRead({
-    ...NFTContract,
-    functionName: "CurrentlyOwnedTokens",
-    args: [],
-  });
-  useEffect(() => {
-    if (TokensData != null || TokensData != undefined) {
-      console.log("TOKENS DATA:", TokensData);
-    }
-  }, [TokensData]);
+  // const { data: TokensData } = useContractRead({
+  //   ...NFTContract,
+  //   functionName: "CurrentlyOwnedTokens",
+  //   args: [],
+  // });
+  // useEffect(() => {
+  //   if (TokensData != null || TokensData != undefined) {
+  //     console.log("TOKENS DATA:", TokensData);
+  //   }
+  // }, [TokensData]);
 
   return currentUser != null || currentUser != undefined ? (
     <div className="container p-0  ">
@@ -206,6 +206,7 @@ const MyCollection = ({ currentUser }) => {
                       "ipfs://",
                       "https://ipfs.io/ipfs/"
                     )}
+                    alt={TokenData.attributes[0].itemType}
                   />
                   <Card.Body>
                     <Card.Title> {TokenData.name}</Card.Title>
