@@ -9,7 +9,6 @@ import TokensInfo from "./components/TokensInfo/TokensInfo";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import NavBar2 from "./components/Navbar/NavBar2";
-import NavBar3 from "./components/Navbar/Navbar3";
 
 const ChainName = () => {
   console.log("Chain Name");
@@ -39,12 +38,6 @@ const App = () => {
           connectors={connectors}
           disconnect={disconnect}
         ></NavBar2>
-        <NavBar3
-          currentUser={address}
-          connect={connect}
-          connectors={connectors}
-          disconnect={disconnect}
-        ></NavBar3>
         <div className="blur-Backgrounds">
           <Routes>
             <Route>
