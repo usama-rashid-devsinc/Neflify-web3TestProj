@@ -748,7 +748,7 @@ export const NFTContract = {
 };
 
 export const TokenStakingContract = {
-  address: "0xc458ac4fAF6c3882d4F5bf3E4385E26B3380DA36",
+  address: "0x92FcfCbA5fEFFE18248e4cA062b173Ea369f5A30",
   abi: [
     {
       inputs: [

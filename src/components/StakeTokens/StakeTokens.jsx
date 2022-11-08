@@ -179,11 +179,18 @@ export default function StakeTokens({ currentUser }) {
               ...prevArray,
               {
                 amountStaked: parseInt(result.amountStaked._hex, 16),
-                RewardCreated: parseInt(result.RewardCreated._hex, 16),
-                // RewardOnPrincipal: parseInt(result.RewardOnPrincipal._hex, 16),
-                dayPassed: parseInt(result.dayPassed._hex, 16),
                 amountClaimed: parseInt(result.amountClaimed._hex, 16),
+                RewardCreated: parseInt(result.RewardCreated._hex, 16),
+                dayPassed: parseInt(result.dayPassed._hex, 16),
+                previousRewards: parseInt(result.previousRewards._hex, 16),
+
                 // RewardOnPrincipal: parseInt(result.RewardOnPrincipal._hex, 16),
+
+                // uint256 amountStaked,
+                // uint256 amountClaimed,
+                // uint256 RewardCreated,
+                // uint256 dayPassed,
+                // uint256 previousRewards
               },
             ]);
           });
@@ -285,6 +292,9 @@ export default function StakeTokens({ currentUser }) {
                     <div> RewardCreated: {result.RewardCreated / 10 ** 18}</div>
                     <div> dayPassed: {result.dayPassed}</div>
                     <div> amountClaimed: {result.amountClaimed / 10 ** 18}</div>
+                    <div>
+                      previousRewards: {result.previousRewards / 10 ** 18}
+                    </div>
                   </div>
                 );
               })
@@ -295,6 +305,7 @@ export default function StakeTokens({ currentUser }) {
                 <div> RewardCreated: 0</div>
                 <div> dayPassed: 0</div>
                 <div> amountClaimed: 0</div>
+                <div>previousRewards: 0</div>
               </div>
             )}
             <Button onClick={ClaimDailyhandler}>Claim Daily Reward </Button>
