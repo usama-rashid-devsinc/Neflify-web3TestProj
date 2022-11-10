@@ -11,7 +11,6 @@ import {
 /* global BigInt */
 
 export default function StakeTokens({ currentUser }) {
-  const [stakingTokenBalance, setStakingTokenBalance] = useState(0);
   const [stakeValue, setStakeValue] = useState(0);
   const [Approval, setApproval] = useState(false);
   const [Displayerror, setError] = useState("");
@@ -24,9 +23,8 @@ export default function StakeTokens({ currentUser }) {
   });
 
   useEffect(() => {
-    // console.log("Data Approvalval:", parseInt(Approvalval._hex, 16) / 10 ** 5);
     if (Approvalval != undefined) {
-      if (parseInt(Approvalval._hex, 16) == 0) setApproval(false);
+      if (parseInt(Approvalval._hex, 16) === 0) setApproval(false);
       else setApproval(true);
     }
   }, [Approvalval]);
@@ -46,44 +44,34 @@ export default function StakeTokens({ currentUser }) {
   /* ##############################################  */
   /* Approval To StakingTokenContract */
   /* ##############################################  */
-  const {
-    data: AppovalWritedata,
-    isSuccess,
-    write: AppovalWrite,
-  } = useContractWrite({
+  const { isSuccess, write: AppovalWrite } = useContractWrite({
     ...StakingToken,
     functionName: "approve",
     args: [TokenStakingContract.address, BigInt(ApprovalValue * 10 ** 18)],
   });
 
-  useEffect(() => {
-    console.log(
-      "Data AppovalWritedata:"
-      // AppovalWritedata
-      // parseInt(AppovalWriteData._hex, 16) / 10 ** 5
-    );
-  }, [isSuccess]);
+  useEffect(() => {}, [isSuccess]);
 
   async function handleapprovalfunc() {
     console.log("Stake value handle Stake :", stakeValue);
     if (ApprovalValue < 0) {
       setError("Cannot Approve a negative value");
-    }
-    // else if (ApprovalValue == 0) {
-    //   setError("Cannot Approve 0 Tokens");
-    // }
-    // else if (ApprovalValue * 10 ** 18 > stakingBal) {
-    //   setError(
-    //     "Enter a Amount less than or equal to the current balance to Approve"
-    //   );
-    // }
-    else {
-      // Call the Staking contract
-      // StakeTokensWrite({});
+    } else if (ApprovalValue === 0 && stakingApprovalVal === 0) {
+      setError("Already Approved 0 Tokens");
+    } else {
       AppovalWrite({});
     }
   }
 
+  const { data: stakingApprovalVal } = useContractRead({
+    ...StakingToken,
+    functionName: "allowance",
+    args: [currentUser, TokenStakingContract.address],
+  });
+  useEffect(() => {
+    // if (stakingApprovalVal != undefined)
+    console.log("1.Current Approval:", stakingApprovalVal);
+  }, [stakingApprovalVal]);
   /* ##############################################  */
 
   // HANDLING of Input Feild
@@ -135,7 +123,7 @@ export default function StakeTokens({ currentUser }) {
     console.log("Stake value handle Stake :", stakeValue);
     if (stakeValue < 0) {
       setError("Cannot Stake a negative value");
-    } else if (stakeValue == 0) {
+    } else if (stakeValue === 0) {
       setError("Cannot Stake 0 Tokens");
     } else if (stakeValue * 10 ** 18 > stakingBal) {
       setError("Enter a Amount less than or equal to the current balance");
@@ -241,15 +229,20 @@ export default function StakeTokens({ currentUser }) {
             <h4 style={{ color: "#267aa4" }}>Stake Tokens</h4>
             <h4>
               StakingTokens balance :{" "}
-              {stakingBal != undefined || stakingBal != null
+              {stakingBal !== undefined || stakingBal != null
                 ? parseInt(stakingBal._hex, 16) / 10 ** 18
                 : 0}
             </h4>
+            <h5>
+              Your Current Approval:
+              {stakingApprovalVal !== undefined &&
+                parseInt(stakingApprovalVal._hex, 16) / 10 ** 18}
+            </h5>
             <div>
               <div>
                 Approve this Contract to Transfer your Staking Tokens:
                 <br />
-                Current Approval: {Approval}
+                Enter Approval Amount: {Approval}
                 <input
                   style={{ width: "250px" }}
                   type="number"
@@ -263,7 +256,7 @@ export default function StakeTokens({ currentUser }) {
                   Approve
                 </Button>
               </div>
-              {/* )} */}
+              Enter Amount to stake: {Approval}
               <input
                 style={{ width: "250px" }}
                 type="number"

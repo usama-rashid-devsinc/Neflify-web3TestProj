@@ -18,6 +18,44 @@ const MyCollection = ({ currentUser }) => {
   const [Displayerror, setError] = useState("");
   const [hexProof, setHexProof] = useState("");
 
+  const {
+    data: CurrentlyOwnedTokens,
+    isError,
+    isLoading,
+    isFetching,
+    isSuccess,
+    isFetched,
+  } = useContractRead({
+    ...NFTContract,
+    functionName: "CurrentlyOwnedTokens",
+    onSettled(data, error) {
+      console.log("Settled", { data, error });
+    },
+    // watch: true,
+  });
+
+  useEffect(() => {
+    // console.log("Data mintingState:", CurrentlyOwnedTokens);
+    console.log(
+      "isError",
+      isError,
+      "Loading",
+      isLoading,
+      "isFetching,",
+      isFetching,
+      "isSuccess,",
+      isSuccess,
+      "isFetched,",
+      isFetched
+    );
+    if (isFetched) {
+      // CurrentlyOwnedTokens.map((tokken) => {
+      // console.log("CurrentlyOwnedTokens:", tokken._hex);
+      // });
+      console.log("CurrentlyOwnedTokens:", CurrentlyOwnedTokens);
+    }
+  }, []);
+
   useEffect(() => {
     async function getCollectionMetaData() {
       setCollection([]);
@@ -175,6 +213,10 @@ const MyCollection = ({ currentUser }) => {
   //   }
   // }, [TokensData]);
 
+  // console.log(
+  //   "imgURI:",
+  //   collection[0].image.replace("ipfs://", "https://ipfs.io/ipfs/")
+  // );
   return currentUser != null || currentUser != undefined ? (
     <div className="container p-0  ">
       <br></br>
@@ -200,6 +242,9 @@ const MyCollection = ({ currentUser }) => {
                       : "daimond"
                   }
                 >
+                  {console.log(
+                    TokenData.image.replace("ipfs://", "https://ipfs.io/ipfs/")
+                  )}
                   <Card.Img
                     variant="top"
                     src={TokenData.image.replace(
