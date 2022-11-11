@@ -2,11 +2,7 @@ import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useContractRead, useContractWrite } from "wagmi";
-import {
-  NFTContract,
-  StakingToken,
-  TokenStakingContract,
-} from "../wagmiConfigurations";
+import { StakingToken, TokenStakingContract } from "../wagmiConfigurations";
 
 /* global BigInt */
 
@@ -20,10 +16,11 @@ export default function StakeTokens({ currentUser }) {
     ...StakingToken,
     functionName: "allowance",
     args: [currentUser, TokenStakingContract.address],
+    watch: true,
   });
 
   useEffect(() => {
-    if (Approvalval != undefined) {
+    if (Approvalval !== undefined) {
       if (parseInt(Approvalval._hex, 16) === 0) setApproval(false);
       else setApproval(true);
     }
@@ -39,7 +36,9 @@ export default function StakeTokens({ currentUser }) {
     console.log("Data stakingBal Bal:", stakingBal);
   }, [stakingBal]);
 
-  useEffect(() => {}, [currentUser]);
+  useEffect(() => {
+    setError("");
+  }, [currentUser]);
 
   /* ##############################################  */
   /* Approval To StakingTokenContract */
@@ -67,6 +66,7 @@ export default function StakeTokens({ currentUser }) {
     ...StakingToken,
     functionName: "allowance",
     args: [currentUser, TokenStakingContract.address],
+    watch: true,
   });
   useEffect(() => {
     // if (stakingApprovalVal != undefined)
@@ -137,6 +137,17 @@ export default function StakeTokens({ currentUser }) {
     console.log("Data StakeData:");
   }, [StakeData]);
 
+  const { data: StakingValuee } = useContractRead({
+    ...TokenStakingContract,
+    functionName: "viewStakeValue",
+    // args: [currentUser],
+    watch: true,
+  });
+
+  useEffect(() => {
+    console.log("StakingValuee NOWWWW:", StakingValuee);
+  }, [StakingValuee]);
+
   useEffect(() => {
     setStakingInfos([]);
     async function getStakingValue() {
@@ -144,8 +155,8 @@ export default function StakeTokens({ currentUser }) {
       // SetID([]);
       if (currentUser != null) {
         if (
-          typeof window.ethereum !== "undefined" ||
-          typeof window.web3 !== "undefined"
+          typeof window.ethereum != "undefined" ||
+          typeof window.web3 != "undefined"
         ) {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const walletAddress = currentUser;
@@ -303,7 +314,7 @@ export default function StakeTokens({ currentUser }) {
             )}
             <Button onClick={ClaimDailyhandler}>Claim Daily Reward </Button>
           </div>
-          {Displayerror != undefined && Displayerror.length > 0 && (
+          {Displayerror !== undefined && Displayerror.length > 0 && (
             <div style={{ backgroundColor: "red" }}>{Displayerror}</div>
           )}
         </div>

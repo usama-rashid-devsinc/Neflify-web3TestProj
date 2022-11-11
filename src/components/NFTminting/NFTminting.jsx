@@ -16,6 +16,7 @@ import MerkleTree from "merkletreejs";
 const NFTminting = ({ currentUser }) => {
   const [Approval, setApproval] = useState(false);
   const [Displayerror, setError] = useState("");
+  const [DisplaySuccess, setSuccess] = useState(null);
   const [hexProof, setHexProof] = useState("");
   const { data: rewardingBal } = useContractRead({
     ...RewardingToken,
@@ -26,6 +27,7 @@ const NFTminting = ({ currentUser }) => {
   const { data: mintingState } = useContractRead({
     ...NFTContract,
     functionName: "mintingCurrentState",
+    watch: true,
     // args: [currentUser],
   });
   const { data: Owner } = useContractRead({
@@ -37,12 +39,14 @@ const NFTminting = ({ currentUser }) => {
     ...RewardingToken,
     functionName: "allowance",
     args: [currentUser, NFTContract.address],
+    watch: true,
   });
 
   const { data: BalOfCurrUser } = useContractRead({
     ...RewardingToken,
     functionName: "balanceOf",
     args: [currentUser],
+    watch: true,
   });
   useEffect(() => {
     console.log("Data Rewarding Bal:", rewardingBal);
@@ -109,22 +113,41 @@ const NFTminting = ({ currentUser }) => {
     isSuccess: mintisSuccess,
     write: mintToken,
     status: mintstatus,
+    error: minterror,
   } = useContractWrite({
     ...NFTContract,
     functionName: "mintDEV",
     args: [hexProof],
     onSettled(data, error) {
-      setError(error.reason);
-      console.log("Settled", { data, error });
+      // setError(minterror);
+      if (error) {
+        setError(error.reason);
+      } else {
+        // setError(data.status);
+        console.log("data: when No error", data);
+      }
+      // console.log("Settled", { data, error });
     },
   });
 
+  // useEffect(() => {
+  //   setError(minterror);
+  // }, [minterror]);
+
   useEffect(() => {
-    console.log(
-      "Data TokenID:",
-      TokenID
-      // parseInt(BalOfCurrUser._hex, 16) / 10 ** 5
-    );
+    // console.log(
+    //   "Data TokenID:",
+    //   TokenID
+    //   // parseInt(BalOfCurrUser._hex, 16) / 10 ** 5
+    // );
+    const getNftOwnData = async () => {
+      await TokenID;
+      if (TokenID != undefined) {
+        setSuccess("Transaction generated at: " + TokenID.hash);
+      }
+      console.log("Sucnccesss: ", TokenID);
+    };
+    getNftOwnData().catch(console.error);
   }, [TokenID]);
 
   useEffect(() => {
@@ -308,6 +331,9 @@ const NFTminting = ({ currentUser }) => {
 
           {Displayerror.length > 0 && (
             <div style={{ backgroundColor: "red" }}>{Displayerror}</div>
+          )}
+          {DisplaySuccess && (
+            <div style={{ backgroundColor: "green" }}>{DisplaySuccess}</div>
           )}
         </>
       )}

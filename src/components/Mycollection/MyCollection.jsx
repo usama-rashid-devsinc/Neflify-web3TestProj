@@ -6,7 +6,7 @@ import "../Global.css";
 import { useContractRead, useContractWrite } from "wagmi";
 import { NFTContract } from "../wagmiConfigurations";
 import { Button } from "react-bootstrap";
-import { merkleTree, whitelistAddresses } from "../EtherConfig";
+import { whitelistAddresses } from "../EtherConfig";
 import { keccak256 } from "ethers/lib/utils";
 import MerkleTree from "merkletreejs";
 
@@ -18,14 +18,7 @@ const MyCollection = ({ currentUser }) => {
   const [Displayerror, setError] = useState("");
   const [hexProof, setHexProof] = useState("");
 
-  const {
-    data: CurrentlyOwnedTokens,
-    isError,
-    isLoading,
-    isFetching,
-    isSuccess,
-    isFetched,
-  } = useContractRead({
+  const { data: CurrentlyOwnedTokens } = useContractRead({
     ...NFTContract,
     functionName: "CurrentlyOwnedTokens",
     onSettled(data, error) {
@@ -35,26 +28,9 @@ const MyCollection = ({ currentUser }) => {
   });
 
   useEffect(() => {
-    // console.log("Data mintingState:", CurrentlyOwnedTokens);
-    console.log(
-      "isError",
-      isError,
-      "Loading",
-      isLoading,
-      "isFetching,",
-      isFetching,
-      "isSuccess,",
-      isSuccess,
-      "isFetched,",
-      isFetched
-    );
-    if (isFetched) {
-      // CurrentlyOwnedTokens.map((tokken) => {
-      // console.log("CurrentlyOwnedTokens:", tokken._hex);
-      // });
-      console.log("CurrentlyOwnedTokens:", CurrentlyOwnedTokens);
-    }
-  }, []);
+    console.log("CurrentlyOwnedTokensNOW: ", CurrentlyOwnedTokens);
+    // }
+  }, [CurrentlyOwnedTokens]);
 
   useEffect(() => {
     async function getCollectionMetaData() {
@@ -83,12 +59,16 @@ const MyCollection = ({ currentUser }) => {
             console.log("result", result);
             result.map(async (token) => {
               console.log("TokenURI ", token);
-              if (token != 0)
+              if (token !== 0)
                 await NFTContractSigner.tokenURI(token).then(async (uri) => {
                   console.log("TokenURI::: ", uri);
                   // const NewURi = uri.replace("/ ", "/");
                   // console.log("NewURi::: ", NewURi);
                   await fetch(uri.replace("ipfs://", "https://ipfs.io/ipfs/"))
+                    // await fetch(
+                    //   uri.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/")
+                    // )
+                    // https://gateway.pinata.cloud/ipfs
                     // uri.replace("ipfs://", "https://ipfs.io/ipfs/")
 
                     // uri.replace("ipfs://", "http://127.0.0.1:8080/ipfs/")
