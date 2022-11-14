@@ -10,6 +10,8 @@ import { whitelistAddresses } from "../EtherConfig";
 import { keccak256 } from "ethers/lib/utils";
 import MerkleTree from "merkletreejs";
 
+/* global BigInt */
+
 const MyCollection = ({ currentUser }) => {
   console.log("MY collection Component");
   const [collection, setCollection] = useState([]);
@@ -60,7 +62,7 @@ const MyCollection = ({ currentUser }) => {
             console.log("result", result);
             result.map(async (token) => {
               console.log("TokenURI ", token);
-              if (token !== 0)
+              if (token !== BigInt(0))
                 await NFTContractSigner.tokenURI(token).then(async (uri) => {
                   console.log("TokenURI::: ", uri);
                   const NewURi = uri.replace(

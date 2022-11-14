@@ -306,7 +306,7 @@ const NFTminting = ({ currentUser }) => {
           <hr />
           <div>
             <div>
-              Approve This Website(NFT Contract) To transder your RewardTokens{" "}
+              Approve This Website(NFT Contract) To transfer your RewardTokens{" "}
             </div>
             <Button className="button" onClick={handleApproval}>
               Approve

@@ -22,7 +22,9 @@ const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
     rpc: (chain) => ({
       // http: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
       // http: `https://data-seed-prebsc-2-s1.binance.org:8545/`,
-      http: `https://data-seed-prebsc-1-s3.binance.org:8545`,
+      // http: `https://data-seed-prebsc-1-s3.binance.org:8545`,
+      https: `https://bsctestapi.terminet.io/rpc`,
+      // http: `https://data-seed-prebsc-2-s1.binance.org:8545/`,
     }),
   }),
 ]);
