@@ -18,19 +18,20 @@ const MyCollection = ({ currentUser }) => {
   const [Displayerror, setError] = useState("");
   const [hexProof, setHexProof] = useState("");
 
-  const { data: CurrentlyOwnedTokens } = useContractRead({
-    ...NFTContract,
-    functionName: "CurrentlyOwnedTokens",
-    onSettled(data, error) {
-      console.log("Settled", { data, error });
-    },
-    // watch: true,
-  });
+  // const { data: CurrentlyOwnedTokens } = useContractRead({
+  //   ...NFTContract,
+  //   functionName: "CurrentlyOwnedTokens1",
+  //   args: [currentUser],
+  //   onSettled(data, error) {
+  //     console.log("Settled", { data, error });
+  //   },
+  //   watch: true,
+  // });
 
-  useEffect(() => {
-    console.log("CurrentlyOwnedTokensNOW: ", CurrentlyOwnedTokens);
-    // }
-  }, [CurrentlyOwnedTokens]);
+  // useEffect(() => {
+  //   console.log("CurrentlyOwnedTokensNOW1: ", CurrentlyOwnedTokens);
+  //   // }
+  // }, [CurrentlyOwnedTokens]);
 
   useEffect(() => {
     async function getCollectionMetaData() {
@@ -62,9 +63,19 @@ const MyCollection = ({ currentUser }) => {
               if (token !== 0)
                 await NFTContractSigner.tokenURI(token).then(async (uri) => {
                   console.log("TokenURI::: ", uri);
-                  // const NewURi = uri.replace("/ ", "/");
-                  // console.log("NewURi::: ", NewURi);
-                  await fetch(uri.replace("ipfs://", "https://ipfs.io/ipfs/"))
+                  const NewURi = uri.replace(
+                    "ipfs://",
+                    "https://gateway.pinata.cloud/ipfs/"
+                    // "https://ipfs.io/ipfs/"
+                  );
+                  console.log("NewURi::: ", NewURi);
+                  await fetch(
+                    uri.replace(
+                      "ipfs://",
+                      "https://gateway.pinata.cloud/ipfs/"
+                      // "https://ipfs.io/ipfs/"
+                    )
+                  )
                     // await fetch(
                     //   uri.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/")
                     // )
@@ -75,13 +86,13 @@ const MyCollection = ({ currentUser }) => {
                     .then((res) => res.json())
                     .then((Data) => {
                       console.log("Data", Data);
-                      // console.log(
-                      //   "TokenData.attributes.itemType:",
-                      //   Data.attributes[0].itemType
-                      // );
+                      console.log(
+                        "TokenData.attributes.itemType:",
+                        Data.attributes[1].itemType
+                      );
                       SetID((prevData) => [
                         ...prevData,
-                        Data.attributes[0].itemType,
+                        Data.attributes[1].itemType,
                       ]);
                       setCollection((prevArray) => [...prevArray, Data]);
                       console.log("CollectionCurrent :", collection);
@@ -94,6 +105,15 @@ const MyCollection = ({ currentUser }) => {
       } else {
         console.log("currentUser is null");
       }
+    }
+
+    async function getCollectionMetaData2() {
+      // CurrentlyOwnedTokens.map((Token) => {
+      //   console.log("2. TOKENS", Token);
+      //   if (Token !== 0) {
+      //     fetch();
+      //   }
+      // });
     }
 
     async function MerkleHash() {
@@ -112,6 +132,7 @@ const MyCollection = ({ currentUser }) => {
     // Call of Async func in useState
     getCollectionMetaData();
     // MerkleHash();
+    getCollectionMetaData2();
     MerkleHash();
   }, [currentUser]);
 
@@ -213,25 +234,32 @@ const MyCollection = ({ currentUser }) => {
               >
                 <Card
                   className={
-                    TokenData.attributes[0].itemType === "Silver"
+                    TokenData.attributes[1].itemType === "Silver"
                       ? "silver"
-                      : TokenData.attributes[0].itemType === "Gold"
+                      : TokenData.attributes[1].itemType === "Gold"
                       ? "gold"
-                      : TokenData.attributes[0].itemType === "Platinum"
+                      : TokenData.attributes[1].itemType === "Platinum"
                       ? "platinum"
                       : "daimond"
                   }
                 >
                   {console.log(
-                    TokenData.image.replace("ipfs://", "https://ipfs.io/ipfs/")
+                    TokenData.image.replace(
+                      "ipfs://",
+                      "https://gateway.pinata.cloud/ipfs/"
+                    )
                   )}
+                  {/* "https://ipfs.io/ipfs/") */}
                   <Card.Img
                     variant="top"
-                    src={TokenData.image.replace(
-                      "ipfs://",
-                      "https://ipfs.io/ipfs/"
-                    )}
-                    alt={TokenData.attributes[0].itemType}
+                    src={
+                      TokenData.image
+                      // .replace(
+                      //   "ipfs://",
+                      //   "https://ipfs.io/ipfs/"
+                      // )
+                    }
+                    alt={TokenData.attributes[1].itemType}
                   />
                   <Card.Body>
                     <Card.Title> {TokenData.name}</Card.Title>
@@ -239,9 +267,9 @@ const MyCollection = ({ currentUser }) => {
 
                     <Card.Text>
                       <b>Type:</b>
-                      {TokenData.attributes[0].itemType}
+                      {TokenData.attributes[1].itemType}
                       <b>TokenID:</b>
-                      {TokenData.attributes[1].itemNumber}
+                      {TokenData.attributes[2].itemNumber}
                     </Card.Text>
                   </Card.Body>
                 </Card>

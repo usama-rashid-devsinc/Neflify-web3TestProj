@@ -20,8 +20,9 @@ import { BrowserRouter } from "react-router-dom";
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
   jsonRpcProvider({
     rpc: (chain) => ({
-      http: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
+      // http: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
       // http: `https://data-seed-prebsc-2-s1.binance.org:8545/`,
+      http: `https://data-seed-prebsc-1-s3.binance.org:8545`,
     }),
   }),
 ]);

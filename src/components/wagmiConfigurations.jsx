@@ -231,6 +231,13 @@ export const RewardingToken = {
     },
     {
       inputs: [],
+      name: "owner",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
       name: "symbol",
       outputs: [{ internalType: "string", name: "", type: "string" }],
       stateMutability: "view",
@@ -414,7 +421,7 @@ export const TokenStakingContract_OLD = {
   ],
 };
 
-export const NFTContract = {
+export const NFTContract_OLD = {
   address: "0xBDcD19625D9E377a0203Eca951e3F899D04D4E3F",
   abi: [
     {
@@ -861,6 +868,348 @@ export const TokenStakingContract = {
         { internalType: "uint256", name: "dayPassed", type: "uint256" },
         { internalType: "uint256", name: "previousRewards", type: "uint256" },
       ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+};
+
+export const NFTContract = {
+  address: "0x2d8089d0aD5eDC7A663C34eCb85e664FCebf35E8",
+  abi: [
+    {
+      inputs: [
+        {
+          internalType: "contract RewardToken",
+          name: "_RewardingTokenAddr",
+          type: "address",
+        },
+        { internalType: "string", name: "_URI", type: "string" },
+      ],
+      stateMutability: "nonpayable",
+      type: "constructor",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "approved",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      name: "Approval",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "bool",
+          name: "approved",
+          type: "bool",
+        },
+      ],
+      name: "ApprovalForAll",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        { indexed: true, internalType: "address", name: "to", type: "address" },
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
+    {
+      inputs: [],
+      name: "CurrentlyOwnedTokens",
+      outputs: [
+        { internalType: "uint256[4]", name: "ownedTokens", type: "uint256[4]" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "user", type: "address" }],
+      name: "CurrentlyOwnedTokens1",
+      outputs: [
+        { internalType: "uint256[4]", name: "ownedTokens", type: "uint256[4]" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+      ],
+      name: "approve",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "owner", type: "address" }],
+      name: "balanceOf",
+      outputs: [{ internalType: "uint256", name: "balance", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "baseExtension",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "baseURI",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "currentBalanceOf",
+      outputs: [{ internalType: "uint8", name: "toReturn", type: "uint8" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "endPreSale",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+      name: "getApproved",
+      outputs: [{ internalType: "address", name: "operator", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "getCurrentMiningState",
+      outputs: [
+        {
+          internalType: "enum DEVSNFTs.State",
+          name: "currentState",
+          type: "uint8",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "owner", type: "address" },
+        { internalType: "address", name: "operator", type: "address" },
+      ],
+      name: "isApprovedForAll",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "merkleRoot",
+      outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
+      ],
+      name: "mint2nftDEV",
+      outputs: [
+        { internalType: "uint256", name: "TokenID1", type: "uint256" },
+        { internalType: "uint256", name: "TokenID2", type: "uint256" },
+      ],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
+      ],
+      name: "mintDEV",
+      outputs: [
+        { internalType: "uint256", name: "TokenIDminted", type: "uint256" },
+      ],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
+      ],
+      name: "mintDiamondNFT",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "mintingCurrentState",
+      outputs: [
+        { internalType: "enum DEVSNFTs.State", name: "", type: "uint8" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "name",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "owner",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+      name: "ownerOf",
+      outputs: [{ internalType: "address", name: "owner", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "randomNumGen",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "randomNumGenDaimond",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+      ],
+      name: "safeTransferFrom",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "operator", type: "address" },
+        { internalType: "bool", name: "_approved", type: "bool" },
+      ],
+      name: "setApprovalForAll",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "bytes32", name: "_merkleRoot", type: "bytes32" },
+      ],
+      name: "setMerkleRoot",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "startPreSale",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "symbol",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+      name: "tokenURI",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "totalSupply",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+      ],
+      name: "transferFrom",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
+      ],
+      name: "whitelistMint",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
       stateMutability: "view",
       type: "function",
     },

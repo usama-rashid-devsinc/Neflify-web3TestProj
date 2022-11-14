@@ -11,7 +11,7 @@ const TokensInfo = ({ currentUser }) => {
     args: [currentUser],
   });
   useEffect(() => {
-    console.log("Data now:", stakingBal);
+    console.log("Data now staking:", stakingBal);
   }, [stakingBal]);
 
   // Reading RewardingToken Balance From Contract
@@ -21,7 +21,7 @@ const TokensInfo = ({ currentUser }) => {
     args: [currentUser],
   });
   useEffect(() => {
-    console.log("Data now:", rewardingBal);
+    console.log("Data now rewarding:", rewardingBal);
   }, [rewardingBal]);
 
   return currentUser != null || currentUser !== undefined ? (
