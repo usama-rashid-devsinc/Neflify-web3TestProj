@@ -282,7 +282,13 @@ const NFTminting = ({ currentUser }) => {
           <span>Minting hasn't Started Yet</span>
           {Owner === currentUser && (
             <div>
-              <Button onClick={handleStartPreSale}> Start Presale</Button>
+              <Button
+                style={{ backgroundColor: "#15cdfc" }}
+                onClick={handleStartPreSale}
+              >
+                {" "}
+                Start Presale
+              </Button>
             </div>
           )}
         </>
@@ -295,7 +301,13 @@ const NFTminting = ({ currentUser }) => {
             <div>
               <br />
               End Pre-Sale to Start Public Sale{"   : "}
-              <Button onClick={handleEndPreSale}> End Presale</Button>
+              <Button
+                style={{ backgroundColor: "#15cdfc" }}
+                onClick={handleEndPreSale}
+              >
+                {" "}
+                End Presale
+              </Button>
             </div>
           )}
         </span>
@@ -308,7 +320,11 @@ const NFTminting = ({ currentUser }) => {
             <div>
               Approve This Website(NFT Contract) To transfer your RewardTokens{" "}
             </div>
-            <Button className="button" onClick={handleApproval}>
+            <Button
+              style={{ backgroundColor: "#15cdfc" }}
+              className="button"
+              onClick={handleApproval}
+            >
               Approve
             </Button>
           </div>
@@ -320,7 +336,7 @@ const NFTminting = ({ currentUser }) => {
           <p>Mint NFT :</p>
 
           <Button
-            className="button"
+            style={{ backgroundColor: "#15cdfc" }}
             onClick={() => {
               // alert("minting token" + currentUser);
               handleMintingNFT();
