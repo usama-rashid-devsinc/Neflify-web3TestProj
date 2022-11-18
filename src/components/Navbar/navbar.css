@@ -28,20 +28,6 @@
 .brand :active {
   color: #15cdfc;
 }
-.navbar-expand-lg .navbar-nav .nav-link :hover {
-  color: red;
-  align-items: flex-start;
-}
-/* .navbar-expand-lg .navbar-nav .nav-link {
-
-  color: white;
-  align-items: stretch;
-  align-items: center;
-}
-
-.navbar-expand-lg .navbar-nav .nav-link :hover {
-  color: #15cdfc;
-} */
 
 .nav-links {
   display: inline-block;
@@ -59,22 +45,5 @@
   line-height: 1;
   /* background-color: red; */
   background-color: #fff;
+  color: red;
 }
-
-/* .navbar > .container,
-.navbar > .container-fluid,
-.navbar > .container-lg,
-.navbar > .container-md,
-.navbar > .container-sm,
-.navbar > .container-xl,
-.navbar > .container-xxl {
-  align-items: center;
-} */
-
-/* @media (min-width: 992px) {
-  .navbar-expand-lg .navbar-collapse {
-    display: flex !important;
-    flex-basis: auto;
-    align-items: ;
-  }
-} */

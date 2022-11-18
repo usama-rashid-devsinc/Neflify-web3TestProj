@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import NavBar from "./components/Navbar/NavBar";
+
 import DashBoard from "./components/DashBoard/DashBoard";
 import NFTminting from "./components/NFTminting/NFTminting";
 import MyCollection from "./components/Mycollection/MyCollection";
@@ -9,11 +9,6 @@ import TokensInfo from "./components/TokensInfo/TokensInfo";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import NavBar2 from "./components/Navbar/NavBar2";
-
-const ChainName = () => {
-  console.log("Chain Name");
-  return;
-};
 
 const App = () => {
   const { address } = useAccount();
@@ -25,12 +20,19 @@ const App = () => {
   return (
     <div className="background-image ">
       <div className="App">
-        {/* <NavBar
-          currentUser={address}
-          connect={connect}
-          connectors={connectors}
-          disconnect={disconnect}
-        ></NavBar> */}
+        {/* <ul class="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul> */}
+
         <NavBar2
           className="p2"
           currentUser={address}
